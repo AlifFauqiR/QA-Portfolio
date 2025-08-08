@@ -7,4 +7,4 @@ Welcome to my Quality Assurance Projects Portfolio. This repo contains hands-on 
 - Automation Testing with Selenium
 - Bug Reports & Documentation
 
-Browse the folders to explore my projects and its assets.
+Browse the folders to explore my projects and its assets 🙌

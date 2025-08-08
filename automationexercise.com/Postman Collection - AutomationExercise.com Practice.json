@@ -1,0 +1,1280 @@
+{
+	"info": {
+		"_postman_id": "85f44186-f3dd-4f10-a29d-939e3472552a",
+		"name": "AutomationExercise.com practice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45111441"
+	},
+	"item": [
+		{
+			"name": "All Products List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response code is 200\", function(){\r",
+							"    pm.expect(response.responseCode).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"All products have a name\", function(){\r",
+							"    response.products.forEach(p => {\r",
+							"        pm.expect(p.name).to.be.a('string').to.not.be.empty;\r",
+							"    })\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Products list is an array\", function(){\r",
+							"    pm.expect(response.products).to.be.an('Array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Products list is not empty\", function(){\r",
+							"    pm.expect(response.products.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/productsList",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"productsList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Method Request Products List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response code is 405\", function(){\r",
+							"    pm.expect(response.responseCode).to.eql(405);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/productsList",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"productsList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Brands List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"All brands name are not empty\", function(){\r",
+							"    response.brands.forEach(p => {\r",
+							"        pm.expect(p.brand).to.be.a('string').to.not.be.empty;\r",
+							"    })\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Brands list is an array\", function(){\r",
+							"    pm.expect(response.brands).to.be.an('Array');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Brands list is not empty\", function(){\r",
+							"    pm.expect(response.brands.length).to.be.above(0);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/brandsList",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"brandsList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Method Request Brands List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response message is correct\", function(){\r",
+							"    pm.expect(response.message).to.eql('This request method is not supported.');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/brandsList",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"brandsList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let searchValue = 'Tops';\r",
+							"\r",
+							"pm.test(\"All response categories match the keyword\", function(){\r",
+							"    response.products.forEach(p => {\r",
+							"        pm.expect(p.category.category.toLowerCase()).to.include(searchValue.toLowerCase());\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Products list is an array\", function(){\r",
+							"    pm.expect(response.products).to.be.an('Array');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Products list is not empty\", function(){\r",
+							"    pm.expect(response.products.length).to.be.above(0);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "search_product",
+							"value": "Tops",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/searchProduct",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"searchProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Product Without Parameter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/searchProduct",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"searchProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "alif",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Mr",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "2001",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "alif",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "fauqi",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "alif company Ltd",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "jalan merpati 1",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "RT 05 RW 03",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Indonesia",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "DKI Jakarta",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Jakarta Utara",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "08123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/createAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"createAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Account invalid email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "alif",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "alif234@",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Mr",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "2001",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "alif",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "fauqi",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "alif company Ltd",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "jalan merpati 1",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "RT 05 RW 03",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Indonesia",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "DKI Jakarta",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Jakarta Utara",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "08123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/createAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"createAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Account without Complete Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "alif",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "alif@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Mr",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/createAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"createAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valid Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response message is correct\", function(){\r",
+							"    pm.expect(response.message).to.eql('User exists!');\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"authToken\", response.token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/verifyLogin",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login with Missing Email or Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response message is correct\", function(){\r",
+							"    pm.expect(response.message).to.eql('Bad request, email or password parameter is missing in POST request.');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/verifyLogin",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Login email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/verifyLogin",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Login password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif1234567",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/verifyLogin",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Method Request Login",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/verifyLogin",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/deleteAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"deleteAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account Invalid Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response message is correct\", function(){\r",
+							"    pm.expect(response.message).to.eql('Account not found!')\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/deleteAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"deleteAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account with No Parameter",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/deleteAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"deleteAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response message is correct\", function(){\r",
+							"    pm.expect(response.message).to.eql('User updated!')\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Alif Fauqi Raihandhika",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Mr",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "2001",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "alif",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "fauqi",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "alif company Ltd",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "jalan merpati 1",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "RT 05 RW 03",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Indonesia",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "DKI Jakarta",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Jakarta Utara",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "08123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/updateAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"updateAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Account with Wrong Password",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Alif Fauqi Raihandhika",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123456",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "Mr",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "01",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "2001",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "alif",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "fauqi",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "alif company Ltd",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "jalan merpati 1",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "RT 05 RW 03",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "Indonesia",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "12345",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "DKI Jakarta",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "Jakarta Utara",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "08123456789",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/updateAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"updateAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Account with Only Email and Password",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/updateAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"updateAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Account with No Password",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/updateAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"updateAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Account with No Email",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "alif123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/updateAccount",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"updateAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Account Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let search = 'alif123@gmail.com';\r",
+							"\r",
+							"pm.test(\"Account detail returned is Valid\", function(){\r",
+							"    pm.expect(response.user.email).to.eql(search);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User detail is an object\", function(){\r",
+							"    pm.expect(response.user).to.be.an('Object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User detail is not empty\", function(){\r",
+							"    pm.expect(Object.keys(response.user).length).to.be.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/getUserDetailByEmail?email=alif123@gmail.com",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"getUserDetailByEmail"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "alif123@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Account Detail with Non-existing Email",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/getUserDetailByEmail?email=alifffff@gmail.com",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"getUserDetailByEmail"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "alifffff@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Account Detail with No Parameter",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/getUserDetailByEmail",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"getUserDetailByEmail"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://automationexercise.com",
+			"type": "default"
+		}
+	]
+}
